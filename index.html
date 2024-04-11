@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es-PY">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tarea numero 3 🎶⚡</title>
+  </head>
+  <body class="body" style="height: 100vh; overflow-y: hidden">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script>
+      const gradient = { value: 0 };
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        "<header><center><h2 style='opacity: 0'  class='header'>Tarea clase 3</h2></center></header>"
+      );
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        "<h1 style='opacity: 0' class='h1'>Un sitio web</h1>"
+      );
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        "<h2 style='opacity: 0'  class='h2'>La accesibilidad web</h2>"
+      );
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        "<p class='chars'>La accesibilidad web, son las características de los productos digitales que nos permiten a los usuarios con poco conocimiento ver en su interfaz de manera mas facil.</p>"
+      );
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        "<h3 style='opacity: 0'  class='h3'>Su Uso</h3>"
+      );
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        "<p style='opacity: 0' style='display: inline-block;'  class='p'>En resumen, un sitio web es fundamental para tener presencia en la Internet, sea para informar, entretener, vender productos o servicios, etc.</p>"
+      );
+      document.body.insertAdjacentHTML("beforeend", "<hr/>");
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        "<span style='opacity: 0; display: inline-block;' class='ed'>Tobias Bardichesky</span>"
+      );
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document.body.style.backgroundImage =
+          "radial-gradient(black, black, purple)";
+
+        document.body.style.backgroundRepeat = "no-repeat";
+        document.body.style.color = "purple";
+
+        const chars = document.querySelector(".chars");
+
+        const charHTML = chars.textContent
+          .split(/(?!$)/u)
+          .map(
+            (item) =>
+              `<span class='char'  style="display: inline-block; overflow: hidden; opacity:0; color: purple;">${
+                item === " " ? "\u00A0" : item
+              }</span>`
+          )
+          .join("");
+
+        chars.innerHTML = charHTML;
+
+        let char = document.querySelectorAll(".char");
+
+        gsap.fromTo(
+          ".header",
+          {
+            opacity: 0,
+            y: 50,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            delay: 1,
+            duration: 0.5,
+            oncomplete: () => {
+              gsap.fromTo(
+                ".h1",
+                {
+                  opacity: 0,
+                  y: 50,
+                },
+                {
+                  delay: 0.5,
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.5,
+                  oncomplete: () => {
+                    gsap.fromTo(
+                      ".h2",
+                      {
+                        x: -100,
+                        opacity: 0,
+                      },
+                      {
+                        delay: 0.5,
+                        x: 0,
+                        opacity: 1,
+                        oncomplete: () => {
+                          gsap.fromTo(
+                            ".h3",
+                            {
+                              y: 50,
+                            },
+                            {
+                              y: 0,
+                              opacity: 1,
+                              delay: 0.3,
+                              duration: 0.8,
+                              oncomplete: () => {
+                                char.forEach((char) => {
+                                  gsap.fromTo(
+                                    char,
+                                    {
+                                      opacity: 0,
+                                    },
+                                    {
+                                      opacity: 1,
+                                      oncomplete: () => {
+                                        gsap.to(".p", {
+                                          opacity: 1,
+                                          delay: 0.8,
+                                          duration: 1,
+                                          ease: "power.inOut1",
+                                          oncomplete: () => {
+                                            gsap.to(".ed", {
+                                              opacity: 1,
+                                              rotation: 720,
+                                              duration: 2,
+                                              ease: "circ.inOut",
+                                              oncomplete: () => {
+                                                gsap.to(gradient, {
+                                                  delay: 2,
+                                                  value: 100,
+                                                  duration: 3,
+                                                  ease: "circ.inOut",
+                                                  onUpdate: () => {
+                                                    document.body.style.backgroundImage = `radial-gradient(circle at center, purple ${
+                                                      gradient.value
+                                                    }%, black, purple ${
+                                                      gradient.value + 1
+                                                    }%)`;
+                                                  },
+                                                  oncomplete: () => {
+                                                    gsap.to(gradient, {
+                                                      delay: 1.8,
+                                                      value: 0,
+                                                      duration: 3,
+                                                      ease: "circ.inOut",
+                                                      onUpdate: () => {
+                                                        document.body.style.backgroundImage = `radial-gradient(circle at center, black ${
+                                                          gradient.value
+                                                        }%, black ${
+                                                          gradient.value / 2
+                                                        }%, black ${
+                                                          gradient.value / 2
+                                                        }%)`;
+                                                      },
+                                                      oncomplete: () => {
+                                                        gsap.to(
+                                                          ".header, .h1, .h2, .h3, .p, .ed",
+                                                          {
+                                                            opacity: 1,
+                                                            rotation: 720,
+                                                            duration: 1.8,
+                                                            ease: "circ.inOut",
+                                                            onComplete: () => {
+                                                              console.log(
+                                                                "Animaciones completadas"
+                                                              );
+                                                            },
+                                                          }
+                                                        );
+                                                      },
+                                                    });
+                                                  },
+                                                });
+                                              },
+                                            });
+                                          },
+                                        });
+                                      },
+                                    }
+                                  );
+                                });
+                              },
+                            }
+                          );
+                        },
+                      }
+                    );
+                  },
+                }
+              );
+            },
+          }
+        );
+      });
+    </script>
+  </body>
+</html>
